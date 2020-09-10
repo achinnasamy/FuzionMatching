@@ -1,0 +1,7 @@
+{
+    "Infrastructure_Environment" : "DEV",    
+    "Application_Logging_Enabled" : "true",
+    "Application_Logging_Level" : "INFO",
+    "Info_Logging_Enabled" : "true",
+    "Info_Logging_Level" : "INFO"    
+}
