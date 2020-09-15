@@ -106,7 +106,7 @@ func FuzionMatch() []FuzionDataCarrier {
 				if percentage > 0 {
 					//fmt.Println("UserName:", userName, "=>", "Company Name:", companyName, " => ", "percentage", percentage)
 
-					_companyScore = _companyScore + " " + companyName + ":" + strconv.Itoa(percentage)
+					_companyScore = _companyScore + " " + companyName + ":" + strconv.Itoa(percentage) + "%"
 					//resultArray = append(resultArray, FuzionDataCarrier{userName, companyName + " : " + strconv.Itoa(percentage)})
 				}
 
