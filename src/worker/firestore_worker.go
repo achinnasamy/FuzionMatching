@@ -60,7 +60,7 @@ func hitFireStore() {
 
 	for _, each := range resultantArray {
 		if each.CompanyScore != "" {
-			fmt.Println("UserName:", each.UserName, "=>", "value - ", each.CompanyScore)
+			//fmt.Println("UserName:", each.UserName, "=>", "value - ", each.CompanyScore)
 			UpdateFireStore("vr_visitor", each.UserName, each.CompanyScore)
 		}
 	}
@@ -92,7 +92,7 @@ func FuzionMatch() []FuzionDataCarrier {
 
 					//fmt.Println("Key:", companyName, "=>", "Element:", eachCompanyProduct)
 					if eachUserProduct == eachCompanyProduct {
-						//fmt.Println("UserProduct:", eachUserProduct, "=>", "CompanyProduct:", eachCompanyProduct)
+						fmt.Println("UserProduct:", eachUserProduct, "=>", "CompanyProduct:", eachCompanyProduct)
 						//fmt.Println("UserName:", userName, "=>", "Company Name:", companyName)
 						matchingCounter++
 					}
