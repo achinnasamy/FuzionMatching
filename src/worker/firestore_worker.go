@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -60,7 +61,7 @@ func hitFireStore() {
 
 	for _, each := range resultantArray {
 		if each.CompanyScore != "" {
-			//fmt.Println("UserName:", each.UserName, "=>", "value - ", each.CompanyScore)
+			fmt.Println("UserName:", each.UserName, "=>", "value - ", each.CompanyScore)
 			UpdateFireStore("vr_visitor", each.UserName, each.CompanyScore)
 		}
 	}
@@ -71,6 +72,7 @@ func hitFireStore() {
 
 func FuzionMatch() []FuzionDataCarrier {
 
+	var howManyRecommendations int = 0
 	var resultArray []FuzionDataCarrier
 	var _companyScore string = ""
 
@@ -104,9 +106,12 @@ func FuzionMatch() []FuzionDataCarrier {
 				percentage := (matchingCounter * 100 / totalProducts)
 
 				if percentage > 0 {
-					//fmt.Println("UserName:", userName, "=>", "Company Name:", companyName, " => ", "percentage", percentage)
+					if howManyRecommendations >= 0 {
+						_companyScore = _companyScore + " " + companyName + ":" + strconv.Itoa(percentage)
+					}
+					howManyRecommendations++
+					//_companyScore = _companyScore + " " + companyName + ":" + strconv.Itoa(percentage)
 
-					_companyScore = _companyScore + " " + companyName + ":" + strconv.Itoa(percentage) + "%"
 					//resultArray = append(resultArray, FuzionDataCarrier{userName, companyName + " : " + strconv.Itoa(percentage)})
 				}
 
@@ -115,12 +120,44 @@ func FuzionMatch() []FuzionDataCarrier {
 
 			}
 		}
-		resultArray = append(resultArray, FuzionDataCarrier{userName, _companyScore})
+
+		resultArray = append(resultArray, FuzionDataCarrier{userName, SortCompaniesInReverseBasedOnScore(_companyScore)})
 		_companyScore = ""
+		howManyRecommendations = 0
 	}
 
 	return resultArray
 
+}
+
+func SortCompaniesInReverseBasedOnScore(companyScore string) string {
+
+	var _finalCompanyScore string = ""
+	resultantMap := make(map[int]string)
+
+	splitOnCompany := strings.Split(companyScore, " ")
+	for _, eachCompany := range splitOnCompany {
+
+		if eachCompany != "" {
+			companyAndScore := strings.Split(strings.TrimSpace(eachCompany), ":")
+			integer_value, _ := strconv.Atoi(companyAndScore[1])
+			resultantMap[integer_value] = companyAndScore[0]
+		}
+	}
+
+	keys := make([]int, len(resultantMap))
+	i := 0
+	for k := range resultantMap {
+		keys[i] = k
+		i++
+	}
+	sort.Sort(sort.Reverse(sort.IntSlice(keys)))
+
+	for _, v := range keys {
+		_finalCompanyScore = _finalCompanyScore + resultantMap[v] + ":" + strconv.Itoa(v) + " "
+	}
+
+	return _finalCompanyScore
 }
 
 func RetrieveExhibitorDataFireStore(collectionName string) map[string][]string {
