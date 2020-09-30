@@ -130,6 +130,7 @@ func FuzionMatch() []FuzionDataCarrier {
 
 }
 
+// Sort the companies in reverse order
 func SortCompaniesInReverseBasedOnScore(companyScore string) string {
 
 	var _finalCompanyScore string = ""
