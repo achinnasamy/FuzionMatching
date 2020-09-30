@@ -70,6 +70,7 @@ func hitFireStore() {
 
 }
 
+// Fuzion matching
 func FuzionMatch() []FuzionDataCarrier {
 
 	var howManyRecommendations int = 0
