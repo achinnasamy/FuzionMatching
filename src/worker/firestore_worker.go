@@ -11,6 +11,7 @@ import (
 
 	"cloud.google.com/go/firestore"
 	"google.golang.org/api/iterator"
+	"google.golang.org/api/option"
 )
 
 type FuzionDataCarrier struct {
@@ -167,11 +168,12 @@ func RetrieveExhibitorDataFireStore(collectionName string) map[string][]string {
 	var intermittentStorage map[string][]string = make(map[string][]string)
 	var arrayStore []string
 
-	projectID := "webcat-284707"
+	projectID := "angboot-49fb1"
 
 	ctx := context.Background()
+	opt := option.WithCredentialsFile("/root/fuzion/angboot.json")
 
-	client, err := firestore.NewClient(ctx, projectID)
+	client, err := firestore.NewClient(ctx, projectID, opt)
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
@@ -213,11 +215,12 @@ func RetrieveVisitorDataFireStore(collectionName string) map[string][]string {
 	var intermittentStorage map[string][]string = make(map[string][]string)
 	var arrayStore []string
 
-	projectID := "webcat-284707"
+	projectID := "angboot-49fb1"
 
 	ctx := context.Background()
+	opt := option.WithCredentialsFile("/root/fuzion/angboot.json")
 
-	client, err := firestore.NewClient(ctx, projectID)
+	client, err := firestore.NewClient(ctx, projectID, opt)
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
@@ -248,11 +251,12 @@ func RetrieveVisitorDataFireStore(collectionName string) map[string][]string {
 
 func UpdateFireStore(collectionName string, documentToBeUpdated string, data string) {
 
-	projectID := "webcat-284707"
+	projectID := "angboot-49fb1"
 
 	ctx := context.Background()
+	opt := option.WithCredentialsFile("/root/fuzion/angboot.json")
 
-	client, err := firestore.NewClient(ctx, projectID)
+	client, err := firestore.NewClient(ctx, projectID, opt)
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
