@@ -9,6 +9,7 @@ import (
 
 	"cloud.google.com/go/firestore"
 	"golang.org/x/exp/errors/fmt"
+	"google.golang.org/api/option"
 )
 
 // export GOOGLE_APPLICATION_CREDENTIALS="/Users/dharshekthvel/Downloads/webcat-0346ea977d9a.json"
@@ -19,11 +20,13 @@ func init() {
 
 func FireStoreConnectionPool() *firestore.Client {
 
-	projectID := "webcat-284707"
+	projectID := "angboot-49fb1"
+
+	opt := option.WithCredentialsFile("/root/fuzion/angboot.json")
 
 	ctx := context.Background()
 
-	FireStoreClient, err := firestore.NewClient(ctx, projectID)
+	FireStoreClient, err := firestore.NewClient(ctx, projectID, opt)
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err, FireStoreClient)
 	}
@@ -33,11 +36,12 @@ func FireStoreConnectionPool() *firestore.Client {
 
 func IngestVisitorDataFireStore(FireStoreClient *firestore.Client, collectionName string, visitor VirtualVisitor) {
 
-	projectID := "webcat-284707"
+	projectID := "angboot-49fb1"
+	opt := option.WithCredentialsFile("/root/fuzion/angboot.json")
 
 	ctx := context.Background()
 
-	client, err := firestore.NewClient(ctx, projectID)
+	client, err := firestore.NewClient(ctx, projectID, opt)
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
@@ -53,11 +57,13 @@ func IngestVisitorDataFireStore(FireStoreClient *firestore.Client, collectionNam
 //
 func IngestExhibitorDataFireStore(FireStoreClient *firestore.Client, collectionName string, exhibitor VirtualExhibitor) {
 
-	projectID := "webcat-284707"
+	projectID := "angboot-49fb1"
+
+	opt := option.WithCredentialsFile("/root/fuzion/angboot.json")
 
 	ctx := context.Background()
 
-	client, err := firestore.NewClient(ctx, projectID)
+	client, err := firestore.NewClient(ctx, projectID, opt)
 	if err != nil {
 		log.Fatalf("Failed to create client: %v", err)
 	}
